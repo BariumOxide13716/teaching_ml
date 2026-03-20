@@ -1,4 +1,5 @@
 from constants.constants import Constants as c
+import numpy as np
 class IdealGasData:
     """
     A class to hold equations of idea gas law calculations
@@ -10,19 +11,19 @@ class IdealGasData:
         pass
 
     def pv_t(self,
-             p_list: list[float],
-             v: float) -> list[float]:
-        return [ p * v / c.R for p in p_list ]
+             p_list: np.ndarray,
+             v: float) -> np.ndarray:
+        return np.array([ p * v / c.R for p in p_list ])
     
     def pt_v(self,
-             p_list: list[float],
-             t: float) -> list[float]:
-        return [ c.R * t / p for p in p_list ]
+             p_list: np.ndarray,
+             t: float) -> np.ndarray:
+        return np.array([ c.R * t / p for p in p_list ])
     
     def vt_p(self,
-             v_list: list[float],
-             t: float) -> list[float]:
-        return [ c.R * t / v for v in v_list ]
+             v_list: np.ndarray,
+             t: float) -> np.ndarray:
+        return np.array([ c.R * t / v for v in v_list ])
 
 
 class VDWGas():
@@ -39,7 +40,6 @@ class VDWGas():
         self.b = b
 
     def vt_p(self,
-             v_list: list[float],
-             t: float) -> list[float]:
-        return [ c.R * t / (v - self.b) - self.a / (v * v) for v in v_list]
-
+             v_list: np.ndarray,
+             t: float) -> np.ndarray:
+        return np.array([ c.R * t / (v - self.b) - self.a / (v * v) for v in v_list])

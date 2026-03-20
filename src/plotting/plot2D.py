@@ -1,3 +1,4 @@
+import numpy as np
 """
     Taking in several combination of x and y values.
     Plot them on a 2D graph with different colors and labels.
@@ -22,11 +23,11 @@
 
 def data_structure_checker(data: list) -> bool:
     """
-    Check if the input data is a list of lists.
+    Check if the input data is a list of numpy ndarrays.
     """
     assert isinstance(data, list), "Input data must be a list."
     for item in data:
-        if not isinstance(item, list):
+        if not isinstance(item, np.ndarray):
             return False
     return True
 
@@ -48,10 +49,10 @@ def plot2d(
 
     # Check if xs and ys are lists of lists
     if not data_structure_checker(xs):
-        print("Error: xs must be a list of lists.")
+        print("Error: xs must be a list of numpy ndarrays.")
         return False
     if not data_structure_checker(ys):
-        print("Error: ys must be a list of lists.")
+        print("Error: ys must be a list of numpy ndarrays.")
         return False
     # Check if the lengths of xs and ys match
     if len(xs) != len(ys):
