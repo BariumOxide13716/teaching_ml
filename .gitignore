@@ -6,6 +6,10 @@ __pycache__/
 # VSCode part
 .vscode/
 
+# test
+playground/*/*.keras
+playground/*/*.png
+
 # C extensions
 *.so
 

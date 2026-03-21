@@ -20,39 +20,39 @@ def main():
     markers = ['o', 'x']
     colors = ['blue', 'red']
     save_path = "lj_mlp_prediction.png"
+    noise_amplitude = 0.01
 
 
 #   generating data
-    x_measured = abscissa_gen(0.5, 3.0, 0.1)
+    x_measured = abscissa_gen(0.7, 3.0, 0.1)
     y_measured = lj(x_measured)
 
 #   adding noise
-    noises_1 = noise_gaussian(x_measured, seed=0, amplitude=0.5, mean=0.0, standard_deviation=0.5)
+    noises_1 = noise_gaussian(x_measured, seed=0, amplitude=noise_amplitude, mean=0.0, standard_deviation=0.5)
     noises_2 = noise_decay(x_measured, initial_state=0.5, decay_rate=0.5)
-    noises_3 = noise_sine(x_measured, amplitude=0.5, frequency=1.0, initial_state=0.0, bias=0.0)
+    noises_3 = noise_sine(x_measured, amplitude=noise_amplitude, frequency=1.0, initial_state=0.0, bias=0.0)
     noises_total = [ n1 + n2*n3 for n1, n2, n3 in zip(noises_1, noises_2, noises_3) ]
     y_noisy = np.array([ e + n for e, n in zip(y_measured, noises_total) ])
 
 #   getting partial data for training
-    x_train = use_partial(x_measured, ratio_to_discard)
-    y_noisy_train = use_partial(y_noisy, ratio_to_discard)
+    x_to_learn = use_partial(x_measured, ratio_to_discard)
+    y_to_learn = use_partial(y_noisy, ratio_to_discard)
 
 #   training MLP
-    my_model = quick_mlp(x_train,
-                        y_noisy_train,
-                        hidden_layers=[ 10, 10 ],
+    my_model = quick_mlp(x_to_learn,
+                        y_to_learn,
+                        model_path="model.keras",
+                        learning_rate=0.1,
+                        hidden_layers=[ 40, 40 ],
                         activation=[ 'relu', 'relu', 'linear' ],
-                        learning_rate=0.01,
-                        test_size=0.2,
-                        random_seed=42,
-                        epochs=100,)
+                        epochs=100)
 
 #   predicting with MLP    
-    y_predicted = my_model.predict([[d] for d in x_measured])
+    y_predicted = my_model.predict(x_measured)
 
 #   making a figure to compare the original data, the noisy data and the MLP prediction
     xs = [x_measured, x_measured]
-    ys = [y_noisy, y_predicted.flatten().tolist()]
+    ys = [y_noisy, y_predicted]
     labels = ["Original Data", "MLP Prediction"]
 
     plot2d(xs, 
