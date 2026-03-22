@@ -58,6 +58,7 @@ def plot2d(
     if len(xs) != len(ys):
         print("Error: The number of x and y sets must be the same.")
         return False
+
     # Set default labels, markers, and colors if not provided
     if labels is None:
         labels = [f"Line {i+1}" for i in range(len(xs))]
@@ -74,8 +75,8 @@ def plot2d(
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.legend()
-    # Save the plot    if save_path is None:
-    save_path = "plot2d.png"
+    # Save the plot
+    save_path = "plot2d.png" if save_path is None else save_path
     plt.savefig(save_path)
     plt.close()
     return True

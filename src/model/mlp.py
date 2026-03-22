@@ -49,10 +49,10 @@ class MLP():
                                                             test_size=self.test_size, 
                                                             random_state=self.random_seed)
     
-        print(f"========Training data size: {len(X_train)}, Testing data size: {len(X_test)}")
-        print(f"========Shape of X_train: {X_train.shape}, Shape of y_train: {y_train.shape}")
+        #print(f"========Training data size: {len(X_train)}, Testing data size: {len(X_test)}")
+        #print(f"========Shape of X_train: {X_train.shape}, Shape of y_train: {y_train.shape}")
         if self.model is not None:
-            self.model.summary()
+            #self.model.summary()
             self.model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=self.learning_rate),
                                loss='mean_squared_error')
             print("Model already exists. Training will continue from the existing model.")
@@ -76,7 +76,7 @@ class MLP():
                                loss='mean_squared_error')
         print("Starting training...")
         if len(X_train) < 50:
-            print(f"========training data details:")
+            #print(f"========training data details:")
             print(X_train)
             print(y_train)
         self.model.fit(X_train, 

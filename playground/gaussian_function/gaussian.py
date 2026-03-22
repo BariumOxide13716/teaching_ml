@@ -1,4 +1,4 @@
-from data_generation.potentials import lennardjones as lj
+from data_generation.potentials import gaussian as mygauss
 from data_generation.noise import noise_gaussian, noise_decay, noise_sine
 from plotting.plot2D import plot2d
 from model.mlp import MLP, quick_mlp
@@ -14,18 +14,18 @@ The MLP is trained on the noisy data and then used to predict the potential on a
 def main():
 
     ratio_to_discard = 0.1
-    figure_title = "MLP Prediction of Lennard-Jones Potential with Noise"
+    figure_title = "MLP Prediction of Gaussian Potential with Noise"
     x_label = "Distance (r)"
     y_label = "Potential Energy (V)"
     markers = ['o', 'x']
     colors = ['blue', 'red']
-    save_path = "lj_mlp_prediction.png"
+    save_path = "gaussian_mlp_prediction.png"
     noise_amplitude = 0.01
 
 
 #   generating data
     x_measured = abscissa_gen(0.7, 3.0, 0.1)
-    y_measured = lj(x_measured)
+    y_measured = mygauss(x_measured)
 
 #   adding noise
 #    noises_1 = noise_gaussian(x_measured, seed=0, amplitude=noise_amplitude, mean=0.0, standard_deviation=0.5)
@@ -69,7 +69,7 @@ def main():
             y_label, 
             markers=markers, 
             colors=colors, 
-            save_path=f"learn_LJ_{i+1}.png")
+            save_path=f"learn_Gaussian_{i+1}.png")
 
 
 if __name__ == "__main__":
